@@ -7,11 +7,10 @@ import { useSession, signOut } from 'next-auth/react';
 
 // material-ui
 import { styled, useTheme, Theme } from '@mui/material/styles';
-import { Box, IconButton, IconButtonProps, List, ListItem, ListItemAvatar, ListItemText, Menu, MenuItem } from '@mui/material';
+import { Box, IconButton, IconButtonProps, List, ListItem, Menu, MenuItem } from '@mui/material';
 
 // project import
-import Avatar from 'components/@extended/Avatar';
-import useUser from 'hooks/useUser';
+// import Avatar from 'components/@extended/Avatar';
 import { useGetMenuMaster } from 'api/menu';
 
 // assets
@@ -47,7 +46,6 @@ const NavUser = () => {
   const { menuMaster } = useGetMenuMaster();
   const drawerOpen = menuMaster.isDashboardDrawerOpened;
 
-  const user = useUser();
   const router = useRouter();
   const { data: session } = useSession();
   const provider = session?.provider;
@@ -99,10 +97,10 @@ const NavUser = () => {
           }
           sx={{ '& .MuiListItemSecondaryAction-root': { right: !drawerOpen ? -20 : -16 } }}
         >
-          <ListItemAvatar>
+          {/* <ListItemAvatar>
             {user && <Avatar alt="Avatar" src={user.avatar} sx={{ ...(drawerOpen && { width: 46, height: 46 }) }} />}
           </ListItemAvatar>
-          {user && <ListItemText primary={user.name} secondary="UI/UX Designer" />}
+          {user && <ListItemText primary={user.name} secondary="UI/UX Designer" />} */}
         </ListItem>
       </List>
       <Menu
