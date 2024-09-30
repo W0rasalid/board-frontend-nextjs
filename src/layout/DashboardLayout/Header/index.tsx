@@ -19,6 +19,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
 // types
 import { MenuOrientation, ThemeMode } from 'types/config';
+import AuthGuard from 'utils/route-guard/AuthGuard';
 
 // ==============================|| MAIN LAYOUT - HEADER ||============================== //
 
@@ -72,10 +73,13 @@ const Header = () => {
     <>
       {!downLG ? (
         <AppBarStyled open={drawerOpen} {...appBar}>
-          {mainHeader}
+          <AuthGuard>{mainHeader}</AuthGuard>
         </AppBarStyled>
       ) : (
-        <AppBar {...appBar}>{mainHeader}</AppBar>
+        <AppBar {...appBar}>
+          {' '}
+          <AuthGuard>{mainHeader}</AuthGuard>
+        </AppBar>
       )}
     </>
   );

@@ -2,16 +2,16 @@ import { useRef, useState, ReactNode, SyntheticEvent } from 'react';
 
 // next
 import { useRouter } from 'next/navigation';
-import { useSession, signOut } from 'next-auth/react';
+// import { useSession, signOut } from 'next-auth/react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Box, ButtonBase, CardContent, ClickAwayListener, Grid, Paper, Popper, Stack, Tab, Tabs, Tooltip, Typography } from '@mui/material';
+import { Box, ButtonBase, CardContent, ClickAwayListener, Grid, Paper, Popper, Stack, Tab, Tabs, Tooltip } from '@mui/material';
 
 // project import
 import ProfileTab from './ProfileTab';
 import SettingTab from './SettingTab';
-import Avatar from 'components/@extended/Avatar';
+// import Avatar from 'components/@extended/Avatar';
 import MainCard from 'components/MainCard';
 import Transitions from 'components/@extended/Transitions';
 import IconButton from 'components/@extended/IconButton';
@@ -55,20 +55,20 @@ const Profile = () => {
   const theme = useTheme();
   const user = useUser();
   const router = useRouter();
-  const { data: session } = useSession();
-  const provider = session?.provider;
+  // const { data: session } = useSession();
+  // const provider = session?.provider;
 
   const handleLogout = () => {
-    switch (provider) {
-      case 'auth0':
-        signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}/api/auth/logout/auth0` });
-        break;
-      case 'cognito':
-        signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}/api/auth/logout/cognito` });
-        break;
-      default:
-        signOut({ redirect: false });
-    }
+    // switch (provider) {
+    //   case 'auth0':
+    //     signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}/api/auth/logout/auth0` });
+    //     break;
+    //   case 'cognito':
+    //     signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}/api/auth/logout/cognito` });
+    //     break;
+    //   default:
+    //     signOut({ redirect: false });
+    // }
 
     router.push('/login');
   };
@@ -115,10 +115,10 @@ const Profile = () => {
       >
         {user && (
           <Stack direction="row" spacing={1.25} alignItems="center" sx={{ p: 0.5 }}>
-            <Avatar alt={user.name} src={user.avatar} size="sm" />
+            {/* <Avatar alt={user.name} src={user.avatar} size="sm" />
             <Typography variant="subtitle1" sx={{ textTransform: 'capitalize' }}>
               {user.name && user.name}
-            </Typography>
+            </Typography> */}
           </Stack>
         )}
       </ButtonBase>
@@ -160,13 +160,13 @@ const Profile = () => {
                       <Grid item>
                         {user && (
                           <Stack direction="row" spacing={1.25} alignItems="center">
-                            <Avatar alt={user.name} src={user.avatar} />
+                            {/* <Avatar alt={user.name} src={user.avatar} />
                             <Stack>
                               <Typography variant="h6">{user.name}</Typography>
                               <Typography variant="body2" color="textSecondary">
                                 UI/UX Designer
                               </Typography>
-                            </Stack>
+                            </Stack> */}
                           </Stack>
                         )}
                       </Grid>

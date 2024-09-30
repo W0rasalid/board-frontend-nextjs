@@ -29,6 +29,16 @@ const DashboardLayout = ({ children }: Props) => {
   // const downLG = useMediaQuery(theme.breakpoints.down('lg'));
 
   const { container, miniDrawer } = useConfig();
+  // const [proFile, setProFile] = React.useState<IUserProfile>();
+
+  // const checkAuth = async () => {
+  //   const resp = await authMe();
+  //   setProFile(resp.result as IUserProfile);
+  // };
+
+  // useEffect(() => {
+  //   checkAuth();
+  // }, []);
 
   // set media wise responsive drawer
   useEffect(() => {
@@ -41,6 +51,7 @@ const DashboardLayout = ({ children }: Props) => {
   if (menuMasterLoading) return <Loader />;
 
   return (
+    // <UserContext.Provider value={proFile}>
     <Box sx={{ display: 'flex', width: '100%' }}>
       <Header />
       <Drawer />
@@ -61,6 +72,7 @@ const DashboardLayout = ({ children }: Props) => {
         </Container>
       </Box>
     </Box>
+    // </UserContext.Provider>
   );
 };
 
