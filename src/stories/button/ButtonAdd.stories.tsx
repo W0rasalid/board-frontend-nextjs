@@ -16,10 +16,11 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     label: 'Create',
-    size: 'medium'
+    size: 'medium',
+    backgroundColor: '#4CAF50'
   },
 
-  render: ({ label, ...args }: ButtonAddProps) => {
-    return <ButtonAdd label={label} size={args.size} />;
+  render: ({ ...args }: ButtonAddProps) => {
+    return <ButtonAdd {...args} />;
   }
 };

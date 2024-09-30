@@ -4,9 +4,8 @@ import React, { ReactNode } from 'react';
 
 import { Button } from '@mui/material';
 import { SxProps } from '@mui/system';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
-export type ButtonAddProps = {
+export type ButtonCommentProps = {
   disabled?: boolean;
   /**
    * string หรือ ReactNode สำหรับแสดงข้อความบนปุ่ม
@@ -15,31 +14,31 @@ export type ButtonAddProps = {
   icon?: ReactNode;
   sx?: SxProps;
   size?: 'small' | 'medium' | 'large';
-  backgroundColor?: string;
+  //   backgroundColor?: string;
   onClick?: () => void;
 };
 
-const ButtonAdd = ({
+const ButtonComment = ({
   disabled = false,
-  label = 'Create',
+  label = 'Add Comments',
   icon,
   sx,
   size = 'medium',
-  backgroundColor = '#4CAF50',
+  //   backgroundColor = '#4CAF50',
   onClick,
   ...props
-}: ButtonAddProps) => {
+}: ButtonCommentProps) => {
   return (
     <React.Fragment>
       <Button
         disabled={disabled}
-        variant="contained"
+        variant="outlined"
         color="success"
-        endIcon={icon ? icon : <AddCircleOutlineIcon />}
+        endIcon={icon}
         size={size}
         sx={{
-          background: backgroundColor ? backgroundColor : '',
-          color: 'white',
+          color: 'success',
+          borderRadius: '8px',
           ...sx
         }}
         {...props}
@@ -51,4 +50,4 @@ const ButtonAdd = ({
   );
 };
 
-export default ButtonAdd;
+export default ButtonComment;
