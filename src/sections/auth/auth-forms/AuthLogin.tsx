@@ -178,16 +178,7 @@ const AuthLogin = () => {
               </Grid>
               <Grid item xs={12}>
                 <AnimateButton>
-                  <Button
-                    disableElevation
-                    disabled={isSubmitting}
-                    fullWidth
-                    size="large"
-                    type="submit"
-                    variant="outlined"
-                    color="info"
-                    //sx={{ backgroundColor: '#4aa569' }}
-                  >
+                  <Button fullWidth size="large" variant="outlined" color="info" onClick={() => router.push(APP_DEFAULT_PATH)}>
                     Continute with out Login
                   </Button>
                 </AnimateButton>

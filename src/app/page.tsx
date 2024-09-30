@@ -1,15 +1,13 @@
 // project import
-import DashboardLayout from 'layout/DashboardLayout';
+// import DashboardLayout from 'layout/DashboardLayout';
 import GuestGuard from 'utils/route-guard/GuestGuard';
-import BoardPage from 'views/board';
+import Login from 'views/auth/login';
+// import BoardPage from 'views/board';
 
 export default function HomePage() {
   return (
     <GuestGuard>
-      {/* <Login /> */}
-      <DashboardLayout>
-        <BoardPage />
-      </DashboardLayout>
+      <Login />
     </GuestGuard>
   );
 }
