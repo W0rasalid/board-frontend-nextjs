@@ -1,31 +1,29 @@
 'use client';
 
 import React, { ReactNode } from 'react';
-
 import { Button } from '@mui/material';
 import { SxProps } from '@mui/system';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 export type ButtonAddProps = {
   disabled?: boolean;
   /**
    * string หรือ ReactNode สำหรับแสดงข้อความบนปุ่ม
    */
-  label: string | React.ReactNode;
-  icon?: ReactNode;
+  label: string | ReactNode;
+  variant?: 'outlined' | 'contained';
   sx?: SxProps;
   size?: 'small' | 'medium' | 'large';
   backgroundColor?: string;
   onClick?: () => void;
 };
 
-const ButtonAdd = ({
+const MuiButton = ({
   disabled = false,
-  label = 'Create',
-  icon,
+  label = '',
+  variant = 'outlined',
   sx,
   size = 'medium',
-  backgroundColor = '#4CAF50',
+  backgroundColor = '#49A569',
   onClick,
   ...props
 }: ButtonAddProps) => {
@@ -33,13 +31,12 @@ const ButtonAdd = ({
     <React.Fragment>
       <Button
         disabled={disabled}
-        variant="contained"
+        variant={variant}
         color="success"
-        endIcon={icon ? icon : <AddCircleOutlineIcon />}
         size={size}
         sx={{
-          background: backgroundColor ? backgroundColor : '',
-          color: 'white',
+          background: variant === 'contained' ? backgroundColor : 'transparent',
+          color: variant === 'contained' ? 'white' : '#49A569',
           ...sx
         }}
         {...props}
@@ -51,4 +48,4 @@ const ButtonAdd = ({
   );
 };
 
-export default ButtonAdd;
+export default MuiButton;
