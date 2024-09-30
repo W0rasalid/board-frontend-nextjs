@@ -23,15 +23,15 @@ axiosServices.interceptors.request.use(
   }
 );
 
-axiosServices.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error?.response?.status === 401 && !window.location.href.includes('/login')) {
-      window.location.pathname = '/login';
-    }
-    return Promise.reject((error.response && error.response.data) || 'Wrong Services');
-  }
-);
+// axiosServices.interceptors.response.use(
+//   (response) => response,
+//   (error) => {
+//     if (error?.response?.status === 401 && !window.location.href.includes('/login')) {
+//       window.location.pathname = '/login';
+//     }
+//     return Promise.reject((error.response && error.response.data) || 'Wrong Services');
+//   }
+// );
 
 const fetchGet = <Input, Output>(url: string, config?: AxiosRequestConfig<Input>) => {
   return axios.get<Output, AxiosResponse<Output, Input>, Input>(url, config);
