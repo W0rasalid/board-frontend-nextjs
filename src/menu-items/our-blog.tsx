@@ -4,24 +4,24 @@
 import { FormattedMessage } from 'react-intl';
 
 // assets
-import { ChromeOutlined } from '@ant-design/icons';
+import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 
 // type
 import { NavItemType } from 'types/menu';
 
 // icons
 const icons = {
-  ChromeOutlined
+  EditNoteOutlinedIcon
 };
 
 // ==============================|| MENU ITEMS - SAMPLE PAGE ||============================== //
 
-const samplePage: NavItemType = {
-  id: 'sample-page',
-  title: <FormattedMessage id="sample-page" />,
+const ourBlogPage: NavItemType = {
+  id: 'ourBlog-menu',
+  title: <FormattedMessage id="ourblog-menu" />,
   type: 'group',
-  url: '/sample-page',
-  icon: icons.ChromeOutlined
+  url: '/board',
+  icon: icons.EditNoteOutlinedIcon
 };
 
-export default samplePage;
+export default ourBlogPage;

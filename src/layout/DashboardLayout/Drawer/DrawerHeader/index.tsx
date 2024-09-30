@@ -1,11 +1,12 @@
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { useMediaQuery } from '@mui/material';
+import { Box, Typography, useMediaQuery } from '@mui/material';
 
 // project import
 import DrawerHeaderStyled from './DrawerHeaderStyled';
-import Logo from 'components/logo';
+import Image from 'next/legacy/image';
 import useConfig from 'hooks/useConfig';
+const boardImg = '/assets/images/logo/board-logo.png';
 
 // types
 import { MenuOrientation } from 'types/config';
@@ -36,7 +37,14 @@ const DrawerHeader = ({ open }: Props) => {
         backgroundColor: '#243831'
       }}
     >
-      <Logo isIcon={!open} sx={{ width: open ? 'auto' : 35, height: 35 }} />
+      <Box>
+        <Image src={boardImg} layout="fixed" width={50} height={30} />
+        {open && (
+          <Typography variant="h5" color="white" sx={{ color: '#F0F0F0', display: 'inline' }}>
+            a Board
+          </Typography>
+        )}
+      </Box>
     </DrawerHeaderStyled>
   );
 };

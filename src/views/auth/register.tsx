@@ -2,8 +2,6 @@
 
 // next
 import NextLink from 'next/link';
-import { NextPageContext } from 'next';
-import { getProviders, getCsrfToken } from 'next-auth/react';
 
 // material-ui
 import { Grid, Link, Stack, Typography } from '@mui/material';
@@ -34,12 +32,12 @@ const Register = ({ providers, csrfToken }: any) => (
   </AuthWrapper>
 );
 
-export async function getServerSideProps(context: NextPageContext) {
-  const providers = await getProviders();
-  const csrfToken = await getCsrfToken(context);
-  return {
-    props: { providers, csrfToken }
-  };
-}
+// export async function getServerSideProps(context: NextPageContext) {
+//   const providers = await getProviders();
+//   const csrfToken = await getCsrfToken(context);
+//   return {
+//     props: { providers, csrfToken }
+//   };
+// }
 
 export default Register;

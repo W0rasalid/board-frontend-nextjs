@@ -7,3 +7,11 @@ export interface IResp {
 export interface IResponse<T> extends IResp {
   result: T;
 }
+
+export interface IRespPagination<T> {
+  currentPage: number;
+  pageCount: number;
+  pageSize: number;
+  rowCount: number;
+  data: T[];
+}

@@ -1,39 +1,33 @@
 'use client';
 
-import { useEffect } from 'react';
-
-// next
-import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
-
-// project-import
-import Loader from 'components/Loader';
+import { useEffect, useState } from 'react';
 
 // types
 import { GuardProps } from 'types/auth';
+import { IUserProfile, UserContext } from 'contexts/UserContext';
+import { authMe } from 'api/auth';
 
 // ==============================|| AUTH GUARD ||============================== //
 
 const AuthGuard = ({ children }: GuardProps) => {
-  const { data: session, status } = useSession();
-  const router = useRouter();
+  const [proFile, setProFile] = useState<IUserProfile>();
+
+  const checkAuth = async () => {
+    try {
+      const resp = await authMe();
+      setProFile(resp.result as IUserProfile);
+      localStorage.setItem('role', resp.result.role);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch('/api/auth/protected');
-      const json = await res?.json();
-      if (!json?.protected) {
-        router.push('/login');
-      }
-    };
-    fetchData();
-
+    checkAuth();
     // eslint-disable-next-line
-  }, [session]);
+  }, []);
 
-  if (status === 'loading' || !session?.user) return <Loader />;
-
-  return children;
+  return <UserContext.Provider value={proFile}>{children}</UserContext.Provider>;
 };
 
 export default AuthGuard;

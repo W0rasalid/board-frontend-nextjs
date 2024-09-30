@@ -3,11 +3,10 @@
 import React, { useState, FocusEvent, SyntheticEvent } from 'react';
 
 // next
-import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
 
 // material-ui
-import { Button, Divider, FormHelperText, Grid, Link, InputAdornment, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
+import { Button, FormHelperText, Grid, InputAdornment, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
 
 // third party
 import * as Yup from 'yup';
@@ -74,6 +73,9 @@ const AuthLogin = () => {
             const resp = await login(request);
             localStorage.setItem('token', resp.result.token);
             router.push(APP_DEFAULT_PATH);
+            setTimeout(() => {
+              window.location.reload();
+            }, 500);
           } catch (error) {
             console.log('error', error);
           }
@@ -84,7 +86,7 @@ const AuthLogin = () => {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="email-login">Email Address</InputLabel>
+                  <InputLabel htmlFor="email-login">User Name</InputLabel>
                   <OutlinedInput
                     id="email-login"
                     type="email"
@@ -148,15 +150,6 @@ const AuthLogin = () => {
                 )}
               </Grid>
 
-              <Grid item xs={12} sx={{ mt: -1 }}>
-                <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-                  <NextLink href={'/forget-pass'} passHref legacyBehavior>
-                    <Link variant="h6" color="text.primary">
-                      Forgot Password?
-                    </Link>
-                  </NextLink>
-                </Stack>
-              </Grid>
               {errors.submit && (
                 <Grid item xs={12}>
                   <FormHelperText error>{errors.submit}</FormHelperText>
@@ -171,40 +164,32 @@ const AuthLogin = () => {
                     size="large"
                     type="submit"
                     variant="contained"
-                    // color="success"
-                    sx={{ backgroundColor: '#4aa569' }}
+                    sx={{
+                      backgroundColor: '#4aa569',
+                      color: 'white',
+                      '&:hover': {
+                        backgroundColor: '#2b5f44'
+                      }
+                    }}
                   >
                     Sign in
                   </Button>
                 </AnimateButton>
+              </Grid>
+              <Grid item xs={12}>
                 <AnimateButton>
-                  <Button
-                    disableElevation
-                    disabled={isSubmitting}
-                    fullWidth
-                    size="large"
-                    type="submit"
-                    variant="contained"
-                    // color="success"
-                    //sx={{ backgroundColor: '#4aa569' }}
-                  >
-                    Sign up
+                  <Button fullWidth size="large" variant="outlined" color="info" onClick={() => router.push(APP_DEFAULT_PATH)}>
+                    Continute with out Login
                   </Button>
                 </AnimateButton>
-
-                {/* <NextLink href="/register" passHref legacyBehavior>
-                  <Link variant="body1" color="primary">
-                    Don&apos;t have an account?
-                  </Link>
-                </NextLink> */}
               </Grid>
             </Grid>
           </form>
         )}
       </Formik>
-      <Divider sx={{ mt: 2 }}>
+      {/* <Divider sx={{ mt: 2 }}>
         <Typography variant="caption"> Login with</Typography>
-      </Divider>
+      </Divider> */}
     </>
   );
 };
