@@ -1,6 +1,6 @@
 // material-ui
 import { Theme } from '@mui/material/styles';
-import { Avatar, Box, Button, Popover, Stack, Typography, useMediaQuery } from '@mui/material';
+import { Box, useMediaQuery } from '@mui/material';
 
 // project import
 
