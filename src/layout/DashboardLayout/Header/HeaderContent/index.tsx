@@ -1,6 +1,6 @@
 // material-ui
 import { Theme } from '@mui/material/styles';
-import { Avatar, Box, Stack, Typography, useMediaQuery } from '@mui/material';
+import { Avatar, Box, Button, Popover, Stack, Typography, useMediaQuery } from '@mui/material';
 
 // project import
 
@@ -35,27 +35,9 @@ const HeaderContent = () => {
       {!downLG && <Box sx={{ width: '100%', ml: 1 }} />}
       {downLG && <Box sx={{ width: '100%', ml: 1 }} />}
       {!downLG && <FullScreen />}
-      {!downLG && <Profile />}
       {/* {downLG && <MobileSection />} */}
       {!userProfile && <MuiButton label="LogIn" size="medium" variant="contained" onClick={() => router.push('/login')} />}
-      {userProfile && (
-        <Stack
-          direction="row"
-          sx={{
-            width: '100%',
-            justifyContent: 'flex-end',
-            alignItems: 'center'
-          }}
-        >
-          <Avatar sx={{ bgcolor: '#f35425' }}>{userProfile?.firstName.substring(0, 1)}</Avatar>
-          <Typography
-            display={'inline-block'}
-            variant="h6"
-            color="#F0F0F0"
-            sx={{ ml: 1 }}
-          >{`${userProfile.firstName} ${userProfile.lastName}`}</Typography>
-        </Stack>
-      )}
+      {userProfile && <Profile />}
     </>
   );
 };

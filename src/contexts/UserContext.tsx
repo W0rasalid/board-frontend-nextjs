@@ -6,13 +6,15 @@ export interface IUserProfile {
   lastName: string;
   email: string;
   role: 'admin' | 'user';
+  profileImage: string;
 }
 const initialState: IUserProfile = {
   id: 0,
   firstName: '',
   lastName: '',
   email: '',
-  role: 'user'
+  role: 'user',
+  profileImage: ''
 };
 
 export const UserContext = createContext<IUserProfile | undefined>(initialState);

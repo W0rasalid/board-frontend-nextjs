@@ -1,4 +1,4 @@
-import { useRef, useState, ReactNode, SyntheticEvent } from 'react';
+import { useRef, useState, ReactNode, useContext } from 'react';
 
 // next
 import { useRouter } from 'next/navigation';
@@ -6,22 +6,18 @@ import { useRouter } from 'next/navigation';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Box, ButtonBase, CardContent, ClickAwayListener, Grid, Paper, Popper, Stack, Tab, Tabs, Tooltip } from '@mui/material';
+import { Avatar, Box, ButtonBase, CardContent, ClickAwayListener, Grid, Paper, Popper, Stack, Typography } from '@mui/material';
 
 // project import
 import ProfileTab from './ProfileTab';
-import SettingTab from './SettingTab';
 // import Avatar from 'components/@extended/Avatar';
 import MainCard from 'components/MainCard';
 import Transitions from 'components/@extended/Transitions';
-import IconButton from 'components/@extended/IconButton';
-import useUser from 'hooks/useUser';
 
 // types
 import { ThemeMode } from 'types/config';
 
-// assets
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { UserContext } from 'contexts/UserContext';
 
 // types
 interface TabPanelProps {
@@ -31,45 +27,17 @@ interface TabPanelProps {
   value: number;
 }
 
-// tab panel wrapper
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div role="tabpanel" hidden={value !== index} id={`profile-tabpanel-${index}`} aria-labelledby={`profile-tab-${index}`} {...other}>
-      {value === index && children}
-    </div>
-  );
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `profile-tab-${index}`,
-    'aria-controls': `profile-tabpanel-${index}`
-  };
-}
-
 // ==============================|| HEADER CONTENT - PROFILE ||============================== //
 
 const Profile = () => {
   const theme = useTheme();
-  const user = useUser();
   const router = useRouter();
-  // const { data: session } = useSession();
-  // const provider = session?.provider;
+  const user = useContext(UserContext);
 
   const handleLogout = () => {
-    // switch (provider) {
-    //   case 'auth0':
-    //     signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}/api/auth/logout/auth0` });
-    //     break;
-    //   case 'cognito':
-    //     signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}/api/auth/logout/cognito` });
-    //     break;
-    //   default:
-    //     signOut({ redirect: false });
-    // }
-
+    localStorage.removeItem('role');
+    localStorage.removeItem('token');
+    localStorage.removeItem('nextauth.message');
     router.push('/login');
   };
 
@@ -86,26 +54,20 @@ const Profile = () => {
     setOpen(false);
   };
 
-  const [value, setValue] = useState(0);
-
-  const handleChange = (event: SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
-
-  const iconBackColorOpen = theme.palette.mode === ThemeMode.DARK ? 'background.default' : 'grey.100';
+  // const iconBackColorOpen = theme.palette.mode === ThemeMode.DARK ? 'background.default' : 'grey.100';
 
   return (
     <Box sx={{ flexShrink: 0, ml: 0.75 }}>
       <ButtonBase
         sx={{
           p: 0.25,
-          bgcolor: open ? iconBackColorOpen : 'transparent',
-          borderRadius: 1,
-          '&:hover': { bgcolor: theme.palette.mode === ThemeMode.DARK ? 'secondary.light' : 'secondary.lighter' },
-          '&:focus-visible': {
-            outline: `2px solid ${theme.palette.secondary.dark}`,
-            outlineOffset: 2
-          }
+          // bgcolor: open ? iconBackColorOpen : 'transparent',
+          borderRadius: 1
+          // '&:hover': { bgcolor: theme.palette.mode === ThemeMode.DARK ? 'secondary.light' : 'secondary.lighter' },
+          // '&:focus-visible': {
+          //   outline: `2px solid ${theme.palette.secondary.dark}`,
+          //   outlineOffset: 2
+          // }
         }}
         aria-label="open profile"
         ref={anchorRef}
@@ -115,10 +77,12 @@ const Profile = () => {
       >
         {user && (
           <Stack direction="row" spacing={1.25} alignItems="center" sx={{ p: 0.5 }}>
-            {/* <Avatar alt={user.name} src={user.avatar} size="sm" />
-            <Typography variant="subtitle1" sx={{ textTransform: 'capitalize' }}>
-              {user.name && user.name}
-            </Typography> */}
+            <Avatar sx={{ bgcolor: '#f35425' }} src={user.profileImage}>
+              {user?.firstName.substring(0, 1)}
+            </Avatar>
+            <Typography variant="subtitle1" sx={{ textTransform: 'capitalize' }} color="#F0F0F0">
+              {`${user.firstName} ${user.lastName}`}
+            </Typography>
           </Stack>
         )}
       </ButtonBase>
@@ -160,61 +124,21 @@ const Profile = () => {
                       <Grid item>
                         {user && (
                           <Stack direction="row" spacing={1.25} alignItems="center">
-                            {/* <Avatar alt={user.name} src={user.avatar} />
-                            <Stack>
-                              <Typography variant="h6">{user.name}</Typography>
-                              <Typography variant="body2" color="textSecondary">
-                                UI/UX Designer
-                              </Typography>
-                            </Stack> */}
+                            <Stack direction="row" spacing={1.25} alignItems="center" sx={{ p: 0.5 }}>
+                              <Avatar sx={{ bgcolor: '#f35425' }} src={user.profileImage}>
+                                {user?.firstName.substring(0, 1)}
+                              </Avatar>
+                              <Typography variant="h6">{`${user.firstName} ${user.lastName}`}</Typography>
+                            </Stack>
                           </Stack>
                         )}
-                      </Grid>
-                      <Grid item>
-                        <Tooltip title="Logout">
-                          <IconButton size="large" sx={{ color: 'text.primary' }} onClick={handleLogout}>
-                            <LogoutOutlined />
-                          </IconButton>
-                        </Tooltip>
                       </Grid>
                     </Grid>
                   </CardContent>
                   {open && (
                     <>
-                      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <Tabs variant="fullWidth" value={value} onChange={handleChange} aria-label="profile tabs">
-                          <Tab
-                            sx={{
-                              display: 'flex',
-                              flexDirection: 'row',
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              textTransform: 'capitalize'
-                            }}
-                            icon={<UserOutlined style={{ marginBottom: 0, marginRight: '10px' }} />}
-                            label="Profile"
-                            {...a11yProps(0)}
-                          />
-                          <Tab
-                            sx={{
-                              display: 'flex',
-                              flexDirection: 'row',
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              textTransform: 'capitalize'
-                            }}
-                            icon={<SettingOutlined style={{ marginBottom: 0, marginRight: '10px' }} />}
-                            label="Setting"
-                            {...a11yProps(1)}
-                          />
-                        </Tabs>
-                      </Box>
-                      <TabPanel value={value} index={0} dir={theme.direction}>
-                        <ProfileTab handleLogout={handleLogout} />
-                      </TabPanel>
-                      <TabPanel value={value} index={1} dir={theme.direction}>
-                        <SettingTab />
-                      </TabPanel>
+                      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}></Box>
+                      <ProfileTab handleLogout={handleLogout} />
                     </>
                   )}
                 </MainCard>
