@@ -6,7 +6,7 @@ import React, { useState, FocusEvent, SyntheticEvent } from 'react';
 import { useRouter } from 'next/navigation';
 
 // material-ui
-import { Button, FormHelperText, Grid, InputAdornment, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
+import { Button, Divider, FormHelperText, Grid, InputAdornment, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
 
 // third party
 import * as Yup from 'yup';
@@ -20,8 +20,9 @@ import { APP_DEFAULT_PATH } from 'config';
 
 // assets
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-import { login } from 'api/auth';
+import { googleSignIn, login } from 'api/auth';
 import { IAuthLoginRequest } from 'api/auth/intefaces/request';
+import AuthGoogleSignIn, { IGoogleSignIn } from './AuthGoogleSignIn';
 
 // const Google = '/assets/images/icons/google.svg';
 
@@ -49,6 +50,29 @@ const AuthLogin = () => {
     }
   };
 
+  const signInWithGoogle = async (tokenResponse: IGoogleSignIn) => {
+    console.log('tokenResponse', tokenResponse);
+    try {
+      const request: IGoogleSignIn = {
+        email: tokenResponse.email,
+        familyName: tokenResponse.familyName,
+        givenName: tokenResponse.givenName,
+        name: tokenResponse.name,
+        picture: tokenResponse.picture,
+        sub: tokenResponse.sub,
+        emailVerified: tokenResponse.emailVerified
+      };
+      const resp = await googleSignIn(request);
+      localStorage.setItem('token', resp.result.token);
+      router.push(APP_DEFAULT_PATH);
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 500);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <Formik
@@ -56,11 +80,13 @@ const AuthLogin = () => {
           // email: 'info@codedthemes.com',
           // password: '123456',
           email: 'admin',
+          userName: 'admin',
           password: '1234',
           submit: null
         }}
         validationSchema={Yup.object().shape({
           // email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+          email: Yup.string().max(255).required('User Name is required'),
           password: Yup.string().max(255).required('Password is required')
         })}
         onSubmit={async (values, { setErrors, setSubmitting }) => {
@@ -94,7 +120,7 @@ const AuthLogin = () => {
                     name="email"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="Enter email address"
+                    placeholder="Enter user name"
                     fullWidth
                     error={Boolean(touched.email && errors.email)}
                   />
@@ -187,9 +213,12 @@ const AuthLogin = () => {
           </form>
         )}
       </Formik>
-      {/* <Divider sx={{ mt: 2 }}>
+      <Divider sx={{ mt: 2 }}>
         <Typography variant="caption"> Login with</Typography>
-      </Divider> */}
+      </Divider>
+      <div style={{ textAlign: 'center', borderRadius: 10 }}>
+        <AuthGoogleSignIn onSuccess={(response) => signInWithGoogle(response)} onError={(error) => console.log(error)} />
+      </div>
     </>
   );
 };
