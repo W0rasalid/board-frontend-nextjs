@@ -1,4 +1,4 @@
-import { useRef, useState, ReactNode, useContext } from 'react';
+import { useRef, useState, useContext } from 'react';
 
 // next
 import { useRouter } from 'next/navigation';
@@ -15,17 +15,11 @@ import MainCard from 'components/MainCard';
 import Transitions from 'components/@extended/Transitions';
 
 // types
-import { ThemeMode } from 'types/config';
+// import { ThemeMode } from 'types/config';
 
 import { UserContext } from 'contexts/UserContext';
 
 // types
-interface TabPanelProps {
-  children?: ReactNode;
-  dir?: string;
-  index: number;
-  value: number;
-}
 
 // ==============================|| HEADER CONTENT - PROFILE ||============================== //
 
