@@ -18,7 +18,10 @@ import { handlerDrawerOpen, useGetMenuMaster } from 'api/menu';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
 // types
-import { MenuOrientation, ThemeMode } from 'types/config';
+import {
+  MenuOrientation
+  //  ThemeMode
+} from 'types/config';
 import AuthGuard from 'utils/route-guard/AuthGuard';
 
 // ==============================|| MAIN LAYOUT - HEADER ||============================== //
@@ -36,7 +39,7 @@ const Header = () => {
   // header content
   const headerContent = useMemo(() => <HeaderContent />, []);
 
-  const iconBackColor = theme.palette.mode === ThemeMode.DARK ? 'background.default' : 'grey.100';
+  // const iconBackColor = theme.palette.mode === ThemeMode.DARK ? 'background.default' : 'grey.100';
 
   // common header
   const mainHeader: ReactNode = (
@@ -47,7 +50,7 @@ const Header = () => {
         edge="start"
         color="secondary"
         variant="light"
-        sx={{ color: 'text.primary', bgcolor: drawerOpen ? 'transparent' : iconBackColor, ml: { xs: 0, lg: -2 } }}
+        // sx={{ color: 'text.primary', bgcolor: drawerOpen ? 'transparent' : iconBackColor, ml: { xs: 0, lg: -2 } }}
       >
         {!drawerOpen ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </IconButton>

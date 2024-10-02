@@ -12,5 +12,10 @@
   "under-construction": "Under Construction",
   "home-header-menu": "Home",
   "home-menu": "Home",
-  "ourblog-menu": "Our Blog"
+  "ourblog-menu": "Our Blog",
+  "api-monitor": "API Monitor",
+  "api-doc": "API Documentation",
+  "grafana-stats": "Grafana Stats",
+  "loki-log": "API Log",
+  "system-menu": "System Menu"
 }
