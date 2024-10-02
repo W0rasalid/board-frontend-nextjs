@@ -32,7 +32,7 @@ export const createPost = async (req: IBoardCreateRequest) => {
 
 export const editPost = async (req: IBoardEditRequest) => {
   try {
-    const res = await axios.post<IBoardEditRequest, IResp>(`/board`, req);
+    const res = await axios.put<IBoardEditRequest, IResp>(`/board`, req);
     return res.data;
   } catch (error) {
     throw error;

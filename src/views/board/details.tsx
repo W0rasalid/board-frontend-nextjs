@@ -28,6 +28,7 @@ const PostDetails: FC<PostDetailsProps> = () => {
         postId: res.result.postId,
         title: res.result.title,
         description: res.result.description,
+        categoryId: res.result.category.categoryId,
         categoryName: res.result.category.categoryName,
         author: res.result.author.firstName + ' ' + res.result.author.lastName,
         cntComment: res.result.cntComment,

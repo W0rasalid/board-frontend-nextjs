@@ -1,5 +1,6 @@
 export interface IBoardSearchSchema {
   postId: number;
+  categoryId: number;
   categoryName: string;
   title: string;
   description: string;

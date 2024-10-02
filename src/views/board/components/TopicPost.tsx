@@ -11,9 +11,10 @@ import { usePathname, useRouter } from 'next/navigation';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import DeleteConfirmDialog from 'components/dialog/ConfirmDeleteDialog';
-import { deletePost } from 'api/board';
+import { deletePost, editPost } from 'api/board';
 import SuccessDialog from 'components/dialog/SuccessDialog';
 import EditPostDialog from 'components/dialog/EditPostDialog';
+import { IBoardEditRequest } from 'api/board/interfaces/request';
 
 type TopicPostProps = {
   data: IBoardSearchSchema;
@@ -30,6 +31,7 @@ const TopicPost: FC<TopicPostProps> = ({ data, cntComment, callback }) => {
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState<boolean>(false);
+  const [messageDialog, setMessageDialog] = useState<string>('');
 
   const handleDelete = async (postId: number) => {
     setLoading(true);
@@ -38,8 +40,24 @@ const TopicPost: FC<TopicPostProps> = ({ data, cntComment, callback }) => {
       await deletePost(Number(postId));
 
       setLoading(false);
+      setMessageDialog('Post deleted successfully');
       setOpenSuccessDialog(true);
     } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleEdit = async (params: IBoardEditRequest) => {
+    setLoading(true);
+    setOpenEditDialog(false);
+    try {
+      await editPost(params);
+      console.log('edit post', params);
+      setLoading(false);
+      setMessageDialog('Post edited successfully');
+      setOpenSuccessDialog(true);
+    } catch (error) {
+      setLoading(false);
       console.error(error);
     }
   };
@@ -60,7 +78,9 @@ const TopicPost: FC<TopicPostProps> = ({ data, cntComment, callback }) => {
         }}
         spacing={2}
       >
-        <Avatar sx={{ bgcolor: '#f35425' }}>{data?.author?.substring(0, 1)}</Avatar>
+        <Avatar src={data?.profileImage ?? ''} sx={{ bgcolor: '#f35425' }}>
+          {data?.author?.substring(0, 1)}
+        </Avatar>
         <Stack direction="column">
           <Typography component="span" variant="h5" sx={{ color: '#A0AFBA', display: 'inline' }}>
             {data.author}
@@ -105,7 +125,7 @@ const TopicPost: FC<TopicPostProps> = ({ data, cntComment, callback }) => {
         </Stack>
       </Box>
 
-      <EditPostDialog open={openEditDialog} data={data} handleClose={() => setOpenEditDialog(false)} />
+      <EditPostDialog open={openEditDialog} data={data} handleClose={() => setOpenEditDialog(false)} onEdit={handleEdit} />
       <DeleteConfirmDialog open={openDeleteDialog} onClose={() => setOpenDeleteDialog(false)} onDelete={() => handleDelete(data.postId)} />
       <SuccessDialog
         open={openSuccessDialog}
@@ -115,7 +135,7 @@ const TopicPost: FC<TopicPostProps> = ({ data, cntComment, callback }) => {
             callback();
           }
         }}
-        message="Post deleted successfully"
+        message={messageDialog}
       />
     </Fragment>
   );
