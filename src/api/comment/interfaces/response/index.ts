@@ -4,6 +4,6 @@ export interface ICommentSearchResponse {
   description: string;
   createName: string;
   createDate: string;
-  author: number;
+  author: string;
   profileImage: string;
 }

@@ -21,6 +21,7 @@ export type MuiTextFieldProps = {
   helperText?: string;
   onChange?: (value: string | null) => void;
   value?: string | null;
+  defaultValue?: string | null;
 };
 
 const MuiTextField: FC<MuiTextFieldProps> = ({
@@ -34,7 +35,8 @@ const MuiTextField: FC<MuiTextFieldProps> = ({
   error,
   helperText,
   onChange,
-  value
+  value,
+  defaultValue
 }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
@@ -47,7 +49,7 @@ const MuiTextField: FC<MuiTextFieldProps> = ({
       id={id}
       label={label}
       value={value ?? ''}
-      defaultValue={value ?? ''}
+      defaultValue={defaultValue ?? ''}
       variant={variant}
       multiline={multiline}
       rows={rows}

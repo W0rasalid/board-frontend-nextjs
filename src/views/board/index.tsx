@@ -105,7 +105,7 @@ const BoardPage = () => {
               data?.map((item) => (
                 <Fragment key={item.postId}>
                   <Box sx={{ display: 'flex', flexDirection: 'column', p: 2 }}>
-                    <TopicPost data={item} />
+                    <TopicPost data={item} cntComment={item.cntComment} />
                   </Box>
                   <Divider variant="fullWidth" />
                 </Fragment>
