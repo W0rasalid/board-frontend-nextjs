@@ -28,7 +28,6 @@ const CommentList: FC<CommentListProps> = ({ cntComment }) => {
     };
     try {
       const res = await getCommentList(request);
-      console.log(res);
       setComment(res.result.data);
       handleCount(res.result.data.length);
     } catch (error) {}
@@ -50,7 +49,9 @@ const CommentList: FC<CommentListProps> = ({ cntComment }) => {
         <List sx={{ width: '100%', bgcolor: 'background.paper' }} key={index}>
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+              <Avatar src={item?.profileImage ?? ''} sx={{ bgcolor: '#f35425' }}>
+                {item?.author?.substring(0, 1)}
+              </Avatar>
             </ListItemAvatar>
 
             <ListItemText

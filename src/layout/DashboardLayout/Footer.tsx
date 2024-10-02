@@ -8,12 +8,7 @@ const Footer = () => (
       <Link href="https://resume-worasalid.vercel.app/" target="_blank" variant="caption" color="textPrimary">
         About us
       </Link>
-      <Link
-        href="https://github.com/W0rasalid/board-backend-nestjs/tree/feature/board"
-        target="_blank"
-        variant="caption"
-        color="textPrimary"
-      >
+      <Link href="https://github.com/W0rasalid/board-frontend-nextjs" target="_blank" variant="caption" color="textPrimary">
         GitHub
       </Link>
     </Stack>
