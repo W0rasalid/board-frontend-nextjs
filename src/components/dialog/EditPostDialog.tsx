@@ -30,11 +30,10 @@ const EditPostDialog: FC<EditPostDialogProps> = ({ open, data, handleClose, onEd
   const [title, setTitle] = React.useState<string>('');
   const [description, setDescription] = React.useState<string>('');
 
-  const handlePost = async () => {
-    console.log('handlePost');
+  const handleEdit = async () => {
     const request: IBoardEditRequest = {
       postId: data.postId,
-      categoryId: Number(selectedCategory?.value),
+      categoryId: selectedCategory?.value ?? data.categoryId,
       title: title,
       description: description
     };
@@ -81,7 +80,14 @@ const EditPostDialog: FC<EditPostDialogProps> = ({ open, data, handleClose, onEd
         </DialogTitle>
         <DialogContent>
           <Stack spacing={2} flexDirection="column" sx={{ p: 1 }}>
-            <CategorySelect placeholder="Choose a community" onSelectChange={(value) => setSelectedCategory(value)} />
+            <CategorySelect
+              placeholder="Choose a community"
+              defaultValue={data.categoryId}
+              onSelectChange={(value) => {
+                console.log('CategorySelect', value);
+                setSelectedCategory(value);
+              }}
+            />
             <MuiTextField
               id="txtTitle"
               color="black"
@@ -112,7 +118,7 @@ const EditPostDialog: FC<EditPostDialogProps> = ({ open, data, handleClose, onEd
               <MuiButton variant="outlined" label="Cancel" sx={{ width: '100%' }} onClick={onClose} />
             </Grid>
             <Grid item xs={12} md={12} lg={2}>
-              <MuiButton variant="contained" label="Post" sx={{ width: '100%' }} onClick={() => handlePost()} />
+              <MuiButton variant="contained" label="Post" sx={{ width: '100%' }} onClick={() => handleEdit()} />
             </Grid>
           </Grid>
         </DialogActions>

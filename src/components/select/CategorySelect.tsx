@@ -39,10 +39,11 @@ const categoryMockData: OptionSelect[] = [
 
 export type CategorySelectProps = {
   placeholder?: string;
+  defaultValue?: number;
   onSelectChange?: (value: OptionSelect | null) => void;
 };
 
-const CategorySelect: FC<CategorySelectProps> = ({ placeholder, onSelectChange }) => {
+const CategorySelect: FC<CategorySelectProps> = ({ placeholder, defaultValue, onSelectChange }) => {
   const handleChange = (event: SelectChangeEvent) => {
     if (onSelectChange) {
       const selectedValue = Number(event.target.value);
@@ -70,6 +71,7 @@ const CategorySelect: FC<CategorySelectProps> = ({ placeholder, onSelectChange }
             borderColor: 'green' // Border color when focused
           }
         }}
+        defaultValue={`${defaultValue}`}
         onChange={handleChange}
       >
         {categoryMockData.map((item) => (
